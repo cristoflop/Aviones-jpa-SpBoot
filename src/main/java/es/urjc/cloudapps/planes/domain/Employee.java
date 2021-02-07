@@ -2,11 +2,11 @@ package es.urjc.cloudapps.planes.domain;
 
 import javax.persistence.*;
 
-@Entity
+@MappedSuperclass
 @Table(name = "Employees")
 @Inheritance(strategy = InheritanceType.JOINED)
 @Access(value = AccessType.FIELD)
-public class Employee {
+public abstract class Employee {
 
     @Id
     private String id;
