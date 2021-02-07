@@ -29,7 +29,7 @@ public class Fly {
 
     private double duration;
 
-    @OneToMany
+    @ManyToMany
     private List<Crewmate> crewmates;
 
     public Fly(Company company,

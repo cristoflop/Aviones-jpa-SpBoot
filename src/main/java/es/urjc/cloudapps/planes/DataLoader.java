@@ -38,6 +38,7 @@ public class DataLoader {
         this.initCrewMates();
         this.initMechanics();
         this.initPlanes();
+        this.initFlies();
     }
 
     private void initAirports() {
