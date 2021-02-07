@@ -8,7 +8,7 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class Iata {
 
-    @Column(name = "iata")
+    @Column(name = "iata", unique = true)
     private String value;
 
     public Iata(String value) {
