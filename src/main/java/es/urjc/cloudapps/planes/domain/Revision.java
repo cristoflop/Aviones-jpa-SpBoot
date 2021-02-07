@@ -19,7 +19,7 @@ public class Revision {
 
     private Date endDate;
 
-    private int revisionDuration;
+    private int spentHours;
 
     @ManyToOne
     private Mechanic mechanicInCharge;
@@ -35,7 +35,7 @@ public class Revision {
     public Revision(Plane plane,
                     Date initDate,
                     Date endDate,
-                    int revisionDuration,
+                    int spentHours,
                     Mechanic mechanicInCharge,
                     RevisionType revisionType,
                     String description,
@@ -43,7 +43,7 @@ public class Revision {
         this.plane = plane;
         this.initDate = initDate;
         this.endDate = endDate;
-        this.revisionDuration = revisionDuration;
+        this.spentHours = spentHours;
         this.mechanicInCharge = mechanicInCharge;
         this.revisionType = revisionType;
         this.description = description;
@@ -69,8 +69,8 @@ public class Revision {
         return endDate;
     }
 
-    public int getRevisionDuration() {
-        return revisionDuration;
+    public int getSpentHours() {
+        return spentHours;
     }
 
     public Mechanic getMechanicInCharge() {
@@ -88,5 +88,5 @@ public class Revision {
     public Airport getAirport() {
         return airport;
     }
-    
+
 }
