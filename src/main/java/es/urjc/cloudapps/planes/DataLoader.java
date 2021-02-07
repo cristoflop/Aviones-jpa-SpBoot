@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Component
 public class DataLoader {
@@ -88,7 +90,7 @@ public class DataLoader {
                 this.planeRepository.findById("0001").get(),
                 this.airportRepository.findById(new Iata("MAD")).get(),
                 this.airportRepository.findById(new Iata("BCN")).get(),
-                Date.valueOf("2020-05-10"),
+                Date.valueOf(LocalDate.parse("2020-05-10 09:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))),
                 1.2,
                 this.crewmateRepository.findAllByNameContaining("o")));
 
@@ -97,7 +99,7 @@ public class DataLoader {
                 this.planeRepository.findById("0002").get(),
                 this.airportRepository.findById(new Iata("MAD")).get(),
                 this.airportRepository.findById(new Iata("LCY")).get(),
-                Date.valueOf("2020-05-27"),
+                Date.valueOf(LocalDate.parse("2020-05-27 12:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))),
                 2.43,
                 this.crewmateRepository.findAllByNameContaining("a")));
     }
