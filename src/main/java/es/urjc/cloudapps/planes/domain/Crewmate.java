@@ -12,9 +12,9 @@ public class Crewmate extends Employee {
 
     private Position position;
 
-    public Crewmate(String id, String name, String surname, Company company, Position position) {
+    public Crewmate(String id, String name, String surname, Company company, PositionValue position) {
         super(id, name, surname, company);
-        this.position = position;
+        this.position = new Position(position);
     }
 
     public Crewmate() {

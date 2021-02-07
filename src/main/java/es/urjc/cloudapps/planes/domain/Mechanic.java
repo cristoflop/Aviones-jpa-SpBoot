@@ -12,10 +12,10 @@ public class Mechanic extends Employee {
     @Embedded
     private Training training;
 
-    public Mechanic(String id, String name, String surname, Company company, int incorporationYear, Training training) {
+    public Mechanic(String id, String name, String surname, Company company, int incorporationYear, TrainingValue training) {
         super(id, name, surname, company);
         this.incorporationYear = incorporationYear;
-        this.training = training;
+        this.training = new Training(training);
     }
 
     public Mechanic() {
