@@ -16,9 +16,10 @@ public class Employee {
 
     private String surname;
 
-    private String company;
+    @ManyToOne
+    private Company company;
 
-    public Employee(String id, String name, String surname, String company) {
+    public Employee(String id, String name, String surname, Company company) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -40,7 +41,7 @@ public class Employee {
         return surname;
     }
 
-    public String getCompany() {
+    public Company getCompany() {
         return company;
     }
 

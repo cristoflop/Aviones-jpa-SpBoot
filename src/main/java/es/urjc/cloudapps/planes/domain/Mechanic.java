@@ -13,7 +13,7 @@ public class Mechanic extends Employee {
     @Embedded
     private Training training;
 
-    public Mechanic(String id, String name, String surname, String company, int incorporationYear, Training training) {
+    public Mechanic(String id, String name, String surname, Company company, int incorporationYear, Training training) {
         super(id, name, surname, company);
         this.incorporationYear = incorporationYear;
         this.training = training;
@@ -29,4 +29,5 @@ public class Mechanic extends Employee {
     public Training getTraining() {
         return training;
     }
+
 }
