@@ -59,21 +59,21 @@ public class DataLoader {
     }
 
     private void initCrewMates() {
-        this.crewmateRepository.save(new Crewmate("0001", "Cristofer", "Lopez", this.companyRepository.findByName("Iberia"), PositionValue.COPILOT));
-        this.crewmateRepository.save(new Crewmate("0002", "Juan", "Avila", this.companyRepository.findByName("Fly Emirates"), PositionValue.COMMANDER));
-        this.crewmateRepository.save(new Crewmate("0003", "Francisco", "Calero", this.companyRepository.findByName("Iberia"), PositionValue.COMMANDER));
-        this.crewmateRepository.save(new Crewmate("0004", "Sergio", "Manzanaro", this.companyRepository.findByName("Fly Emirates"), PositionValue.PURSER));
+        this.crewmateRepository.save(new Crewmate("0001", "Cristofer", "Lopez", this.companyRepository.findByName("Iberia"), Position.COPILOT));
+        this.crewmateRepository.save(new Crewmate("0002", "Juan", "Avila", this.companyRepository.findByName("Fly Emirates"), Position.COMMANDER));
+        this.crewmateRepository.save(new Crewmate("0003", "Francisco", "Calero", this.companyRepository.findByName("Iberia"), Position.COMMANDER));
+        this.crewmateRepository.save(new Crewmate("0004", "Sergio", "Manzanaro", this.companyRepository.findByName("Fly Emirates"), Position.PURSER));
     }
 
     private void initMechanics() {
         this.mechanicRepository.save(new Mechanic(
-                "0001", "Ernesto", "Vivar", this.companyRepository.findByName("Mechanics Top"), 2020, TrainingValue.CAREER));
+                "0001", "Ernesto", "Vivar", this.companyRepository.findByName("Mechanics Top"), 2020, Training.CAREER));
         this.mechanicRepository.save(new Mechanic(
-                "0002", "David", "Salido", this.companyRepository.findByName("Mechanics Top"), 2020, TrainingValue.CAREER));
+                "0002", "David", "Salido", this.companyRepository.findByName("Mechanics Top"), 2020, Training.CAREER));
         this.mechanicRepository.save(new Mechanic(
-                "0003", "Luis", "Fernandez", this.companyRepository.findByName("Airbus Getafe"), 2020, TrainingValue.CAREER));
+                "0003", "Luis", "Fernandez", this.companyRepository.findByName("Airbus Getafe"), 2020, Training.CAREER));
         this.mechanicRepository.save(new Mechanic(
-                "0004", "Micael", "Gallego", this.companyRepository.findByName("Airbus Illescas"), 2020, TrainingValue.CAREER));
+                "0004", "Micael", "Gallego", this.companyRepository.findByName("Airbus Illescas"), 2020, Training.CAREER));
     }
 
     private void initPlanes() {

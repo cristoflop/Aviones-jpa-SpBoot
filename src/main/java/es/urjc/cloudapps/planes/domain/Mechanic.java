@@ -9,13 +9,13 @@ public class Mechanic extends Employee {
 
     private int incorporationYear;
 
-    @Embedded
+    @Enumerated(EnumType.STRING)
     private Training training;
 
-    public Mechanic(String id, String name, String surname, Company company, int incorporationYear, TrainingValue training) {
+    public Mechanic(String id, String name, String surname, Company company, int incorporationYear, Training training) {
         super(id, name, surname, company);
         this.incorporationYear = incorporationYear;
-        this.training = new Training(training);
+        this.training = training;
     }
 
     public Mechanic() {
