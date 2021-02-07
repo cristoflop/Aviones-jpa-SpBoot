@@ -9,8 +9,8 @@ import java.util.List;
 @Repository
 public interface CrewmateRepository extends CrudRepository<Crewmate, String> {
 
-    List<Crewmate> findAllByName(String name);
+    List<Crewmate> findAllByNameContaining(String name);
 
-    List<Crewmate> findAllBySurname(String surname);
+    List<Crewmate> findAllBySurnameContaining(String surname);
 
 }
