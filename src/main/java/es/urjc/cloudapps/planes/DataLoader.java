@@ -1,9 +1,6 @@
 package es.urjc.cloudapps.planes;
 
-import es.urjc.cloudapps.planes.data.AirportRepository;
-import es.urjc.cloudapps.planes.data.CompanyRepository;
-import es.urjc.cloudapps.planes.data.CrewmateRepository;
-import es.urjc.cloudapps.planes.data.MechanicRepository;
+import es.urjc.cloudapps.planes.data.*;
 import es.urjc.cloudapps.planes.domain.*;
 import org.springframework.stereotype.Component;
 
@@ -16,15 +13,18 @@ public class DataLoader {
     private final CompanyRepository companyRepository;
     private final CrewmateRepository crewmateRepository;
     private final MechanicRepository mechanicRepository;
+    private final PlaneRepository planeRepository;
 
     public DataLoader(AirportRepository airportRepository,
                       CompanyRepository companyRepository,
                       CrewmateRepository crewmateRepository,
-                      MechanicRepository mechanicRepository) {
+                      MechanicRepository mechanicRepository,
+                      PlaneRepository planeRepository) {
         this.airportRepository = airportRepository;
         this.companyRepository = companyRepository;
         this.crewmateRepository = crewmateRepository;
         this.mechanicRepository = mechanicRepository;
+        this.planeRepository = planeRepository;
     }
 
     @PostConstruct
@@ -33,6 +33,7 @@ public class DataLoader {
         this.initCompanies();
         this.initCrewMates();
         this.initMechanics();
+        this.initPlanes();
     }
 
     private void initAirports() {
@@ -48,7 +49,6 @@ public class DataLoader {
         this.companyRepository.save(new Company("Mechanics Top"));
         this.companyRepository.save(new Company("Airbus Getafe"));
         this.companyRepository.save(new Company("Airbus Illescas"));
-
     }
 
     private void initCrewMates() {
@@ -67,6 +67,14 @@ public class DataLoader {
                 "0003", "Luis", "Fernandez", this.companyRepository.findByName("Airbus Getafe"), 2020, TrainingValue.CAREER));
         this.mechanicRepository.save(new Mechanic(
                 "0004", "Micael", "Gallego", this.companyRepository.findByName("Airbus Illescas"), 2020, TrainingValue.CAREER));
+    }
+
+    private void initPlanes() {
+        this.planeRepository.save(new Plane("0001", "Airbus", "A320", 5000));
+        this.planeRepository.save(new Plane("0002", "British Airways", "Boeing 747", 5000));
+        this.planeRepository.save(new Plane("0003", "EEUU", "F-18", 5000));
+        this.planeRepository.save(new Plane("0004", "Heinkel", "He 280", 2000));
+        this.planeRepository.save(new Plane("0005", "Arado", "Ar 430", 2000));
     }
 
 }
