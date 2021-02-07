@@ -32,15 +32,13 @@ public class Fly {
     @OneToMany
     private List<Crewmate> crewmates;
 
-    public Fly(long id,
-               Company company,
+    public Fly(Company company,
                Plane plane,
                Airport source,
                Airport destination,
                Date startTime,
                double duration,
                List<Crewmate> crewmates) {
-        this.id = id;
         this.company = company;
         this.plane = plane;
         this.source = source;
@@ -84,5 +82,5 @@ public class Fly {
     public List<Crewmate> getCrewmates() {
         return crewmates;
     }
-    
+
 }

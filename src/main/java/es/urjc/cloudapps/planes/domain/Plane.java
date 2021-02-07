@@ -8,7 +8,6 @@ import javax.persistence.*;
 public class Plane {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private String plate;
 
     private String maker;

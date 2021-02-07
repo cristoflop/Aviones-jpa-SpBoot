@@ -13,8 +13,7 @@ public class Company {
 
     private String name;
 
-    public Company(long id, String name) {
-        this.id = id;
+    public Company(String name) {
         this.name = name;
     }
 

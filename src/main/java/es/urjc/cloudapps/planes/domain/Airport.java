@@ -4,13 +4,10 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "Airports")
+@Access(value = AccessType.FIELD)
 public class Airport {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-
-    @Embedded
+    @EmbeddedId
     private Iata iata;
 
     private String name;
@@ -19,19 +16,14 @@ public class Airport {
 
     private String country;
 
-    public Airport(long id, Iata iata, String name, String city, String country) {
-        this.id = id;
-        this.iata = iata;
+    public Airport(String iata, String name, String city, String country) {
+        this.iata = new Iata(iata);
         this.name = name;
         this.city = city;
         this.country = country;
     }
 
     public Airport() {
-    }
-
-    public long getId() {
-        return id;
     }
 
     public Iata getIata() {

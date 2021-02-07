@@ -4,9 +4,10 @@ import es.urjc.cloudapps.planes.exception.IataNotValidException;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 
 @Embeddable
-public class Iata {
+public class Iata implements Serializable {
 
     @Column(name = "iata", unique = true)
     private String value;

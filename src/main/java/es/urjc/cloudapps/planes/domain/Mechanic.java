@@ -1,11 +1,10 @@
 package es.urjc.cloudapps.planes.domain;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "Mechanics")
+@Access(value = AccessType.FIELD)
 public class Mechanic extends Employee {
 
     private int incorporationYear;
