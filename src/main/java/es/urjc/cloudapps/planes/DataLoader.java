@@ -5,6 +5,7 @@ import es.urjc.cloudapps.planes.domain.*;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.sql.Date;
 
 @Component
 public class DataLoader {
@@ -14,17 +15,20 @@ public class DataLoader {
     private final CrewmateRepository crewmateRepository;
     private final MechanicRepository mechanicRepository;
     private final PlaneRepository planeRepository;
+    private final FlyRepository flyRepository;
 
     public DataLoader(AirportRepository airportRepository,
                       CompanyRepository companyRepository,
                       CrewmateRepository crewmateRepository,
                       MechanicRepository mechanicRepository,
-                      PlaneRepository planeRepository) {
+                      PlaneRepository planeRepository,
+                      FlyRepository flyRepository) {
         this.airportRepository = airportRepository;
         this.companyRepository = companyRepository;
         this.crewmateRepository = crewmateRepository;
         this.mechanicRepository = mechanicRepository;
         this.planeRepository = planeRepository;
+        this.flyRepository = flyRepository;
     }
 
     @PostConstruct
@@ -75,6 +79,26 @@ public class DataLoader {
         this.planeRepository.save(new Plane("0003", "EEUU", "F-18", 5000));
         this.planeRepository.save(new Plane("0004", "Heinkel", "He 280", 2000));
         this.planeRepository.save(new Plane("0005", "Arado", "Ar 430", 2000));
+    }
+
+    private void initFlies() {
+        this.flyRepository.save(new Fly(
+                this.companyRepository.findByName("Iberia"),
+                this.planeRepository.findById("0001").get(),
+                this.airportRepository.findById(new Iata("MAD")).get(),
+                this.airportRepository.findById(new Iata("BCN")).get(),
+                Date.valueOf("2020-05-10"),
+                1.2,
+                this.crewmateRepository.findAllByNameContaining("o")));
+
+        this.flyRepository.save(new Fly(
+                this.companyRepository.findByName("Iberia"),
+                this.planeRepository.findById("0002").get(),
+                this.airportRepository.findById(new Iata("MAD")).get(),
+                this.airportRepository.findById(new Iata("LCY")).get(),
+                Date.valueOf("2020-05-27"),
+                2.43,
+                this.crewmateRepository.findAllByNameContaining("a")));
     }
 
 }
