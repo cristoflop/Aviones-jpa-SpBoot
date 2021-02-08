@@ -18,19 +18,22 @@ public class DataLoader {
     private final MechanicRepository mechanicRepository;
     private final PlaneRepository planeRepository;
     private final FlyRepository flyRepository;
+    private final RevisionRepository revisionRepository;
 
     public DataLoader(AirportRepository airportRepository,
                       CompanyRepository companyRepository,
                       CrewmateRepository crewmateRepository,
                       MechanicRepository mechanicRepository,
                       PlaneRepository planeRepository,
-                      FlyRepository flyRepository) {
+                      FlyRepository flyRepository,
+                      RevisionRepository revisionRepository) {
         this.airportRepository = airportRepository;
         this.companyRepository = companyRepository;
         this.crewmateRepository = crewmateRepository;
         this.mechanicRepository = mechanicRepository;
         this.planeRepository = planeRepository;
         this.flyRepository = flyRepository;
+        this.revisionRepository = revisionRepository;
     }
 
     @PostConstruct
@@ -41,6 +44,7 @@ public class DataLoader {
         this.initMechanics();
         this.initPlanes();
         this.initFlies();
+        this.initRevisions();
     }
 
     private void initAirports() {
@@ -102,6 +106,30 @@ public class DataLoader {
                 Date.valueOf(LocalDate.parse("2020-05-27 12:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))),
                 2.43,
                 this.crewmateRepository.findAllByNameContaining("a")));
+    }
+
+    private void initRevisions() {
+        this.revisionRepository.save(new Revision(
+                this.planeRepository.findById("0001").get(),
+                Date.valueOf(LocalDate.parse("2020-01-27 12:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))),
+                Date.valueOf(LocalDate.parse("2020-01-29 18:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))),
+                23,
+                this.mechanicRepository.findById("0001").get(),
+                RevisionType.PERIODIC,
+                "Periodic revision of January",
+                this.airportRepository.findById(new Iata("MAD")).get()
+        ));
+
+        this.revisionRepository.save(new Revision(
+                this.planeRepository.findById("0001").get(),
+                Date.valueOf(LocalDate.parse("2020-02-10 12:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))),
+                Date.valueOf(LocalDate.parse("2020-02-15 18:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))),
+                40,
+                this.mechanicRepository.findById("0001").get(),
+                RevisionType.REPARATION,
+                "Left wing reparation",
+                this.airportRepository.findById(new Iata("MAD")).get()
+        ));
     }
 
 }
