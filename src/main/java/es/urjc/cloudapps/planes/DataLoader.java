@@ -184,8 +184,8 @@ public class DataLoader implements CommandLineRunner {
     }
 
     private void query2() {
-        String city = "Barcelona"; // En Barcelona aterrizan dos vuelos
-        Date date = Date.valueOf(LocalDate.parse("2020-06-18", DateTimeFormatter.ofPattern("yyyy-MM-dd"))); // 18 de junio de 2020
+        String city = "Barcelona";
+        Date date = Date.valueOf("2020-06-18"); // 18 de junio de 2020 aterrizan dos vuelos en Barcelona
         System.out.println("Dado el nombre de una ciudad y una fecha, listado de los vuelos que han aterrizado\n" +
                 "(destino) en los aeropuertos de esa ciudad en esa fecha, ordenados por hora.");
         List<Fly> flies = this.flyRepository.findAllByDestinationCityAfterDate(city, date);
