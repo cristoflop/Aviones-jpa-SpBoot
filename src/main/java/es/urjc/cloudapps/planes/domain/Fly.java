@@ -2,6 +2,7 @@ package es.urjc.cloudapps.planes.domain;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.sql.Time;
 import java.util.List;
 
 @Entity
@@ -25,7 +26,9 @@ public class Fly {
     @ManyToOne
     private Airport destination;
 
-    private Date startTime;
+    private Date startDate;
+
+    private Time startTime;
 
     private double duration;
 
@@ -36,13 +39,15 @@ public class Fly {
                Plane plane,
                Airport source,
                Airport destination,
-               Date startTime,
+               Date startDate,
+               Time startTime,
                double duration,
                List<Crewmate> crewmates) {
         this.company = company;
         this.plane = plane;
         this.source = source;
         this.destination = destination;
+        this.startDate = startDate;
         this.startTime = startTime;
         this.duration = duration;
         this.crewmates = crewmates;
@@ -71,7 +76,11 @@ public class Fly {
         return destination;
     }
 
-    public Date getStartTime() {
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public Time getStartTime() {
         return startTime;
     }
 
