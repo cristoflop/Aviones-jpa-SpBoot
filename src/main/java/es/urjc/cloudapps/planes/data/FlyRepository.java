@@ -1,5 +1,6 @@
 package es.urjc.cloudapps.planes.data;
 
+import es.urjc.cloudapps.planes.domain.Crewmate;
 import es.urjc.cloudapps.planes.domain.Fly;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -15,5 +16,7 @@ public interface FlyRepository extends CrudRepository<Fly, String> {
     @Query("from Fly fly where fly.destination.city = ?1 and fly.startDate = ?2 order by fly.startTime")
     List<Fly> findAllByDestinationCityAfterDate(@Param("city") String city,
                                                 @Param("date") Date date);
+
+    List<Fly> findAllByCrewmatesContaining(Crewmate crewmate);
 
 }

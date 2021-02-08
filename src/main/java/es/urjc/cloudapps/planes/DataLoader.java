@@ -201,6 +201,16 @@ public class DataLoader implements CommandLineRunner {
         String crewmateId = "0001"; // Cristofer despega desde MAD y LCY
         System.out.println("Dado el código de empleado de un tripulante, mostrar su nombre y apellidos y las\n" +
                 "ciudades desde las que ha despegado junto con la fecha en que despegó.");
+        Crewmate crewmate = this.crewmateRepository.findById(crewmateId).get();
+        List<Fly> flies = this.flyRepository.findAllByCrewmatesContaining(crewmate);
+        System.out.println("--- "
+                .concat(crewmate.getName())
+                .concat(" ")
+                .concat(crewmate.getSurname())
+                .concat(", vuelos que ha realizado: " + flies.size()));
+        flies.forEach(fly -> {
+            System.out.println("   --- Desde " + fly.getSource().getName() + " el dia " + fly.getStartDate());
+        });
     }
 
     private void query4() {
