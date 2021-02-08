@@ -112,7 +112,7 @@ public class DataLoader {
                 this.planeRepository.findById("0001").get(),
                 this.airportRepository.findById(new Iata("LCY")).get(),
                 this.airportRepository.findById(new Iata("BCN")).get(),
-                Date.valueOf(LocalDate.parse("2020-18-06 12:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))),
+                Date.valueOf(LocalDate.parse("2020-06-18 12:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))),
                 3.1,
                 this.crewmateRepository.findAllByNameContaining("er")));
     }
