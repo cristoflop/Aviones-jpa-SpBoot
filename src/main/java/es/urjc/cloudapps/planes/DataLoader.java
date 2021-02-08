@@ -6,8 +6,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Controller;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Controller
 public class DataLoader implements CommandLineRunner {
@@ -107,7 +109,8 @@ public class DataLoader implements CommandLineRunner {
                 this.planeRepository.findById("0001").get(),
                 this.airportRepository.findById(new Iata("MAD")).get(),
                 this.airportRepository.findById(new Iata("BCN")).get(),
-                Date.valueOf(LocalDate.parse("2020-05-10 09:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))),
+                Date.valueOf("2020-05-10"),
+                Time.valueOf("09:00:00"),
                 1.2,
                 this.crewmateRepository.findAllByNameContaining("o")));
 
@@ -116,7 +119,8 @@ public class DataLoader implements CommandLineRunner {
                 this.planeRepository.findById("0002").get(),
                 this.airportRepository.findById(new Iata("MAD")).get(),
                 this.airportRepository.findById(new Iata("LCY")).get(),
-                Date.valueOf(LocalDate.parse("2020-05-27 12:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))),
+                Date.valueOf("2020-05-27"),
+                Time.valueOf("12:00:00"),
                 2.43,
                 this.crewmateRepository.findAllByNameContaining("a")));
 
@@ -125,9 +129,20 @@ public class DataLoader implements CommandLineRunner {
                 this.planeRepository.findById("0001").get(),
                 this.airportRepository.findById(new Iata("LCY")).get(),
                 this.airportRepository.findById(new Iata("BCN")).get(),
-                Date.valueOf(LocalDate.parse("2020-06-18 12:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))),
+                Date.valueOf("2020-06-18"),
+                Time.valueOf("18:00:00"),
                 3.1,
                 this.crewmateRepository.findAllByNameContaining("er")));
+
+        this.flyRepository.save(new Fly(
+                this.companyRepository.findByName("American Airlines"),
+                this.planeRepository.findById("0001").get(),
+                this.airportRepository.findById(new Iata("LCY")).get(),
+                this.airportRepository.findById(new Iata("BCN")).get(),
+                Date.valueOf("2020-06-18"),
+                Time.valueOf("09:00:00"),
+                3.1,
+                this.crewmateRepository.findAllByNameContaining("j")));
     }
 
     private void initRevisions() {
@@ -170,9 +185,16 @@ public class DataLoader implements CommandLineRunner {
 
     private void query2() {
         String city = "Barcelona"; // En Barcelona aterrizan dos vuelos
-        Date date = Date.valueOf(LocalDate.parse("2020-01-01 09:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))); // Fecha desde 1 de Enero de 2020
+        Date date = Date.valueOf(LocalDate.parse("2020-06-18", DateTimeFormatter.ofPattern("yyyy-MM-dd"))); // 18 de junio de 2020
         System.out.println("Dado el nombre de una ciudad y una fecha, listado de los vuelos que han aterrizado\n" +
                 "(destino) en los aeropuertos de esa ciudad en esa fecha, ordenados por hora.");
+        List<Fly> flies = this.flyRepository.findAllByDestinationCityAfterDate(city, date);
+        System.out.println("--- Vuelos el dia " + date.toString() + ", " + flies.size());
+        flies.forEach(fly -> {
+            System.out.println("   --- Vuelo " + fly.getSource().getName() + " - " + fly.getDestination().getName());
+            System.out.println("      --- Duracion " + fly.getDuration() + " horas");
+            System.out.println("      --- Compañia " + fly.getCompany().getName());
+        });
     }
 
     private void query3() {
