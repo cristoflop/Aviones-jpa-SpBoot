@@ -48,21 +48,13 @@ public class DataLoader implements CommandLineRunner {
 
         // queries
         System.out.println("----------------------------------------");
-        System.out.println("Para cada avión, mostrar el nombre y apellidos de los mecánicos responsables de\n" +
-                "sus revisiones.");
-
+        this.query1();
         System.out.println("----------------------------------------");
-        System.out.println("Dado el nombre de una ciudad y una fecha, listado de los vuelos que han aterrizado\n" +
-                "(destino) en los aeropuertos de esa ciudad en esa fecha, ordenados por hora.");
-
+        this.query2();
         System.out.println("----------------------------------------");
-        System.out.println("Dado el código de empleado de un tripulante, mostrar su nombre y apellidos y las\n" +
-                "ciudades desde las que ha despegado junto con la fecha en que despegó.");
-
+        this.query3();
         System.out.println("----------------------------------------");
-        System.out.println("Para cada tripulante, mostrar su nombre y apellidos junto con su número total de\n" +
-                "vuelos y la suma de horas de estos.");
-
+        this.query4();
         System.out.println("----------------------------------------");
 
 
@@ -155,11 +147,43 @@ public class DataLoader implements CommandLineRunner {
                 Date.valueOf(LocalDate.parse("2020-02-10 12:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))),
                 Date.valueOf(LocalDate.parse("2020-02-15 18:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))),
                 40,
-                this.mechanicRepository.findById("0001").get(),
+                this.mechanicRepository.findById("0002").get(),
                 RevisionType.REPARATION,
                 "Left wing reparation",
                 this.airportRepository.findById(new Iata("MAD")).get()
         ));
+    }
+
+    private void query1() {
+        System.out.println("Para cada avión, mostrar el nombre y apellidos de los mecánicos responsables de\n" +
+                "sus revisiones.");
+        Iterable<Plane> planes = this.planeRepository.findAll();
+        planes.forEach(plane -> {
+            System.out.println("--- Avion con matricula " + plane.getPlate());
+            Iterable<Revision> revisions = this.revisionRepository.findAllByPlane(plane);
+            revisions.forEach(revision -> {
+                System.out.println("   --- Revision con id: " + revision.getId() + ", responsable: " +
+                        revision.getMechanicInCharge().getName().concat(" ").concat(revision.getMechanicInCharge().getSurname()));
+            });
+        });
+    }
+
+    private void query2() {
+        String city = "Barcelona"; // En Barcelona aterrizan dos vuelos
+        Date date = Date.valueOf(LocalDate.parse("2020-01-01 09:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))); // Fecha desde 1 de Enero de 2020
+        System.out.println("Dado el nombre de una ciudad y una fecha, listado de los vuelos que han aterrizado\n" +
+                "(destino) en los aeropuertos de esa ciudad en esa fecha, ordenados por hora.");
+    }
+
+    private void query3() {
+        String crewmateId = "0001"; // Cristofer despega desde MAD y LCY
+        System.out.println("Dado el código de empleado de un tripulante, mostrar su nombre y apellidos y las\n" +
+                "ciudades desde las que ha despegado junto con la fecha en que despegó.");
+    }
+
+    private void query4() {
+        System.out.println("Para cada tripulante, mostrar su nombre y apellidos junto con su número total de\n" +
+                "vuelos y la suma de horas de estos.");
     }
 
 }
