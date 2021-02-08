@@ -2,15 +2,15 @@ package es.urjc.cloudapps.planes;
 
 import es.urjc.cloudapps.planes.data.*;
 import es.urjc.cloudapps.planes.domain.*;
-import org.springframework.stereotype.Component;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Controller;
 
-import javax.annotation.PostConstruct;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-@Component
-public class DataLoader {
+@Controller
+public class DataLoader implements CommandLineRunner {
 
     private final AirportRepository airportRepository;
     private final CompanyRepository companyRepository;
@@ -36,8 +36,8 @@ public class DataLoader {
         this.revisionRepository = revisionRepository;
     }
 
-    @PostConstruct
-    public void init() {
+    @Override
+    public void run(String... args) {
         this.initAirports();
         this.initCompanies();
         this.initCrewMates();
@@ -45,6 +45,27 @@ public class DataLoader {
         this.initPlanes();
         this.initFlies();
         this.initRevisions();
+
+        // queries
+        System.out.println("----------------------------------------");
+        System.out.println("Para cada avión, mostrar el nombre y apellidos de los mecánicos responsables de\n" +
+                "sus revisiones.");
+
+        System.out.println("----------------------------------------");
+        System.out.println("Dado el nombre de una ciudad y una fecha, listado de los vuelos que han aterrizado\n" +
+                "(destino) en los aeropuertos de esa ciudad en esa fecha, ordenados por hora.");
+
+        System.out.println("----------------------------------------");
+        System.out.println("Dado el código de empleado de un tripulante, mostrar su nombre y apellidos y las\n" +
+                "ciudades desde las que ha despegado junto con la fecha en que despegó.");
+
+        System.out.println("----------------------------------------");
+        System.out.println("Para cada tripulante, mostrar su nombre y apellidos junto con su número total de\n" +
+                "vuelos y la suma de horas de estos.");
+
+        System.out.println("----------------------------------------");
+
+
     }
 
     private void initAirports() {
