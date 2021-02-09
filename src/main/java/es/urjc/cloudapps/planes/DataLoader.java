@@ -2,6 +2,7 @@ package es.urjc.cloudapps.planes;
 
 import es.urjc.cloudapps.planes.data.*;
 import es.urjc.cloudapps.planes.domain.*;
+import es.urjc.cloudapps.planes.dto.PlaneRevisionDto;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Controller;
 
@@ -172,14 +173,11 @@ public class DataLoader implements CommandLineRunner {
     private void query1() {
         System.out.println("Para cada avión, mostrar el nombre y apellidos de los mecánicos responsables de\n" +
                 "sus revisiones.");
-        Iterable<Plane> planes = this.planeRepository.findAll();
+        List<PlaneRevisionDto> planes = this.planeRepository.findAllWithRevisionMechanics();
         planes.forEach(plane -> {
             System.out.println("--- Avion con matricula " + plane.getPlate());
-            Iterable<Revision> revisions = this.revisionRepository.findAllByPlane(plane);
-            revisions.forEach(revision -> {
-                System.out.println("   --- Revision con id: " + revision.getId() + ", responsable: " +
-                        revision.getMechanicInCharge().getName().concat(" ").concat(revision.getMechanicInCharge().getSurname()));
-            });
+            System.out.println("   --- Revision con id: " + plane.getRevisionId() + ", responsable: " +
+                    plane.getMechanicName().concat(" ").concat(plane.getMechanicSurname()));
         });
     }
 
