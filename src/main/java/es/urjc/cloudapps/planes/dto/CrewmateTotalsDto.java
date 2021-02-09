@@ -1,13 +1,13 @@
-package es.urjc.cloudapps.planes.data;
+package es.urjc.cloudapps.planes.dto;
 
-public class CrewmateTotalsProjection {
+public class CrewmateTotalsDto {
 
     private String name;
     private String surname;
     private long totalFlies;
     private double flyingHours;
 
-    public CrewmateTotalsProjection(String name, String lastname, long totalFlies, double flyingHours) {
+    public CrewmateTotalsDto(String name, String lastname, long totalFlies, double flyingHours) {
         this.name = name;
         this.surname = lastname;
         this.totalFlies = totalFlies;
