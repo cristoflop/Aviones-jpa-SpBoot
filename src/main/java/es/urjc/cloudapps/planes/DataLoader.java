@@ -216,6 +216,16 @@ public class DataLoader implements CommandLineRunner {
     private void query4() {
         System.out.println("Para cada tripulante, mostrar su nombre y apellidos junto con su número total de\n" +
                 "vuelos y la suma de horas de estos.");
+        for (CrewmateTotalsProjection totals : this.crewmateRepository.findAllCrewmateTotals()) {
+            System.out.println("--- "
+                    .concat(totals.getName())
+                    .concat(" ")
+                    .concat(totals.getSurname())
+                    .concat(", vuelos que ha realizado: " + totals.getTotalFlies())
+                    .concat(", horas de vuelo: " + totals.getFlyingHours())
+            );
+        }
+
     }
 
 }
