@@ -13,7 +13,7 @@ public interface CrewmateRepository extends CrudRepository<Crewmate, String> {
 
     List<Crewmate> findAllByNameContaining(String name);
 
-    @Query("select new es.urjc.cloudapps.planes.data.CrewmateTotalsProjection(cr.name, cr.surname, count(f.id), sum(f.duration)) from " +
+    @Query("select new es.urjc.cloudapps.planes.dto.CrewmateTotalsDto(cr.name, cr.surname, count(f.id), sum(f.duration)) from " +
             "Fly f join f.crewmates cr " +
             "group by cr.id")
     List<CrewmateTotalsDto> findAllCrewmateTotals();
