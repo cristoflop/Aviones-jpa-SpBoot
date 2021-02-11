@@ -23,6 +23,9 @@ public class Plane {
         this.flightHours = flightHours;
     }
 
+    // JSON
+    private String data;
+
     public Plane() {
     }
 
