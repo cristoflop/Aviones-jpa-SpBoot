@@ -16,15 +16,16 @@ public class Plane {
 
     private int flightHours;
 
-    public Plane(String plate, String maker, String model, int flightHours) {
+    // JSON
+    private String data;
+
+    public Plane(String plate, String maker, String model, int flightHours, String data) {
         this.plate = plate;
         this.maker = maker;
         this.model = model;
         this.flightHours = flightHours;
+        this.data = data;
     }
-
-    // JSON
-    private String data;
 
     public Plane() {
     }
@@ -43,6 +44,10 @@ public class Plane {
 
     public int getFlightHours() {
         return flightHours;
+    }
+
+    public String getData() {
+        return data;
     }
 
 }
