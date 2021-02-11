@@ -5,6 +5,7 @@ import es.urjc.cloudapps.planes.domain.*;
 import es.urjc.cloudapps.planes.dto.CrewmateTotalsDto;
 import es.urjc.cloudapps.planes.dto.PlaneRevisionDto;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Controller;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+@Controller
 public class DataLoader implements CommandLineRunner {
 
     private final AirportRepository airportRepository;
@@ -40,14 +42,6 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        this.initAirports();
-        this.initCompanies();
-        this.initCrewMates();
-        this.initMechanics();
-        this.initPlanes();
-        this.initFlies();
-        this.initRevisions();
-
         // queries
         System.out.println("----------------------------------------");
         this.query1();
@@ -58,8 +52,6 @@ public class DataLoader implements CommandLineRunner {
         System.out.println("----------------------------------------");
         this.query4();
         System.out.println("----------------------------------------");
-
-
     }
 
     private void initAirports() {
