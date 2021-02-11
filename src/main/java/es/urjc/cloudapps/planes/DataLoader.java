@@ -1,16 +1,14 @@
 package es.urjc.cloudapps.planes;
 
 import es.urjc.cloudapps.planes.data.*;
-import es.urjc.cloudapps.planes.domain.*;
+import es.urjc.cloudapps.planes.domain.Crewmate;
+import es.urjc.cloudapps.planes.domain.Fly;
 import es.urjc.cloudapps.planes.dto.CrewmateTotalsDto;
 import es.urjc.cloudapps.planes.dto.PlaneRevisionDto;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Controller;
 
 import java.sql.Date;
-import java.sql.Time;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -52,113 +50,6 @@ public class DataLoader implements CommandLineRunner {
         System.out.println("----------------------------------------");
         this.query4();
         System.out.println("----------------------------------------");
-    }
-
-    private void initAirports() {
-        this.airportRepository.save(new Airport("MAD", "Barajas", "Madrid", "Spain"));
-        this.airportRepository.save(new Airport("BCN", "El Prat", "Barcelona", "Spain"));
-        this.airportRepository.save(new Airport("LCY", "London City Airport", "London", "England"));
-    }
-
-    private void initCompanies() {
-        this.companyRepository.save(new Company("Iberia"));
-        this.companyRepository.save(new Company("Fly Emirates"));
-        this.companyRepository.save(new Company("American Airlines"));
-        this.companyRepository.save(new Company("Mechanics Top"));
-        this.companyRepository.save(new Company("Airbus Getafe"));
-        this.companyRepository.save(new Company("Airbus Illescas"));
-    }
-
-    private void initCrewMates() {
-        this.crewmateRepository.save(new Crewmate("0001", "Cristofer", "Lopez", this.companyRepository.findByName("Iberia"), Position.COPILOT));
-        this.crewmateRepository.save(new Crewmate("0002", "Juan", "Avila", this.companyRepository.findByName("Fly Emirates"), Position.COMMANDER));
-        this.crewmateRepository.save(new Crewmate("0003", "Francisco", "Calero", this.companyRepository.findByName("Iberia"), Position.COMMANDER));
-        this.crewmateRepository.save(new Crewmate("0004", "Sergio", "Manzanaro", this.companyRepository.findByName("Fly Emirates"), Position.PURSER));
-    }
-
-    private void initMechanics() {
-        this.mechanicRepository.save(new Mechanic(
-                "0001", "Ernesto", "Vivar", this.companyRepository.findByName("Mechanics Top"), 2020, Training.CAREER));
-        this.mechanicRepository.save(new Mechanic(
-                "0002", "David", "Salido", this.companyRepository.findByName("Mechanics Top"), 2020, Training.CAREER));
-        this.mechanicRepository.save(new Mechanic(
-                "0003", "Luis", "Fernandez", this.companyRepository.findByName("Airbus Getafe"), 2020, Training.CAREER));
-        this.mechanicRepository.save(new Mechanic(
-                "0004", "Micael", "Gallego", this.companyRepository.findByName("Airbus Illescas"), 2020, Training.CAREER));
-    }
-
-    private void initPlanes() {
-        this.planeRepository.save(new Plane("0001", "Airbus", "A320", 5000));
-        this.planeRepository.save(new Plane("0002", "British Airways", "Boeing 747", 5000));
-        this.planeRepository.save(new Plane("0003", "EEUU", "F-18", 5000));
-        this.planeRepository.save(new Plane("0004", "Heinkel", "He 280", 2000));
-        this.planeRepository.save(new Plane("0005", "Arado", "Ar 430", 2000));
-    }
-
-    private void initFlies() {
-        this.flyRepository.save(new Fly(
-                this.companyRepository.findByName("Iberia"),
-                this.planeRepository.findById("0001").get(),
-                this.airportRepository.findById(new Iata("MAD")).get(),
-                this.airportRepository.findById(new Iata("BCN")).get(),
-                Date.valueOf("2020-05-10"),
-                Time.valueOf("09:00:00"),
-                1.2,
-                this.crewmateRepository.findAllByNameContaining("o")));
-
-        this.flyRepository.save(new Fly(
-                this.companyRepository.findByName("Iberia"),
-                this.planeRepository.findById("0002").get(),
-                this.airportRepository.findById(new Iata("MAD")).get(),
-                this.airportRepository.findById(new Iata("LCY")).get(),
-                Date.valueOf("2020-05-27"),
-                Time.valueOf("12:00:00"),
-                2.43,
-                this.crewmateRepository.findAllByNameContaining("a")));
-
-        this.flyRepository.save(new Fly(
-                this.companyRepository.findByName("Fly Emirates"),
-                this.planeRepository.findById("0001").get(),
-                this.airportRepository.findById(new Iata("LCY")).get(),
-                this.airportRepository.findById(new Iata("BCN")).get(),
-                Date.valueOf("2020-06-18"),
-                Time.valueOf("18:00:00"),
-                3.1,
-                this.crewmateRepository.findAllByNameContaining("er")));
-
-        this.flyRepository.save(new Fly(
-                this.companyRepository.findByName("American Airlines"),
-                this.planeRepository.findById("0001").get(),
-                this.airportRepository.findById(new Iata("LCY")).get(),
-                this.airportRepository.findById(new Iata("BCN")).get(),
-                Date.valueOf("2020-06-18"),
-                Time.valueOf("09:00:00"),
-                3.1,
-                this.crewmateRepository.findAllByNameContaining("j")));
-    }
-
-    private void initRevisions() {
-        this.revisionRepository.save(new Revision(
-                this.planeRepository.findById("0001").get(),
-                Date.valueOf(LocalDate.parse("2020-01-27 12:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))),
-                Date.valueOf(LocalDate.parse("2020-01-29 18:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))),
-                23,
-                this.mechanicRepository.findById("0001").get(),
-                RevisionType.PERIODIC,
-                "Periodic revision of January",
-                this.airportRepository.findById(new Iata("MAD")).get()
-        ));
-
-        this.revisionRepository.save(new Revision(
-                this.planeRepository.findById("0001").get(),
-                Date.valueOf(LocalDate.parse("2020-02-10 12:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))),
-                Date.valueOf(LocalDate.parse("2020-02-15 18:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))),
-                40,
-                this.mechanicRepository.findById("0002").get(),
-                RevisionType.REPARATION,
-                "Left wing reparation",
-                this.airportRepository.findById(new Iata("MAD")).get()
-        ));
     }
 
     private void query1() {
@@ -214,7 +105,6 @@ public class DataLoader implements CommandLineRunner {
                     .concat(", horas de vuelo: " + totals.getFlyingHours())
             );
         }
-
     }
 
 }
