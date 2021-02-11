@@ -54,30 +54,6 @@ INSERT INTO `crewmates` (`id`, `name`, `surname`, `position`, `company_id`) VALU
 ('0004', 'Sergio', 'Manzanaro', 'PURSER', 2);
 
 --
--- Volcado de datos para la tabla `flies`
---
-
-INSERT INTO `flies` (`id`, `duration`, `start_date`, `start_time`, `company_id`, `destination_iata`, `plane_plate`, `source_iata`) VALUES
-(7, 1.2, '2020-05-10', '09:00:00', 1, 'BCN', '0001', 'MAD'),
-(8, 2.43, '2020-05-27', '12:00:00', 1, 'LCY', '0002', 'MAD'),
-(9, 3.1, '2020-06-18', '18:00:00', 2, 'BCN', '0001', 'LCY'),
-(10, 3.1, '2020-06-18', '09:00:00', 3, 'BCN', '0001', 'LCY');
-
---
--- Volcado de datos para la tabla `flies_crewmates`
---
-
-INSERT INTO `flies_crewmates` (`fly_id`, `crewmates_id`) VALUES
-(7, '0001'),
-(7, '0003'),
-(7, '0004'),
-(8, '0002'),
-(8, '0003'),
-(9, '0001'),
-(9, '0004'),
-(10, '0002');
-
---
 -- Volcado de datos para la tabla `hibernate_sequence`
 --
 
@@ -106,12 +82,36 @@ INSERT INTO `planes` (`plate`, `flight_hours`, `maker`, `model`) VALUES
 ('0005', 2000, 'Arado', 'Ar 430');
 
 --
+-- Volcado de datos para la tabla `flies`
+--
+
+INSERT INTO `flies` (`id`, `duration`, `start_date`, `start_time`, `company_id`, `destination_iata`, `plane_plate`, `source_iata`) VALUES
+(7, 1.2, '2020-05-10', '09:00:00', 1, 'BCN', '0001', 'MAD'),
+(8, 2.43, '2020-05-27', '12:00:00', 1, 'LCY', '0002', 'MAD'),
+(9, 3.1, '2020-06-18', '18:00:00', 2, 'BCN', '0001', 'LCY'),
+(10, 3.1, '2020-06-18', '09:00:00', 3, 'BCN', '0001', 'LCY');
+
+--
 -- Volcado de datos para la tabla `revisions`
 --
 
 INSERT INTO `revisions` (`id`, `description`, `end_date`, `init_date`, `revision_type`, `spent_hours`, `airport_iata`, `mechanic_in_charge_id`, `plane_plate`) VALUES
 (11, 'Periodic revision of January', '2020-01-29', '2020-01-27', 'PERIODIC', 23, 'MAD', '0001', '0001'),
 (12, 'Left wing reparation', '2020-02-15', '2020-02-10', 'REPARATION', 40, 'MAD', '0002', '0001');
+
+--
+-- Volcado de datos para la tabla `flies_crewmates`
+--
+
+INSERT INTO `flies_crewmates` (`fly_id`, `crewmates_id`) VALUES
+(7, '0001'),
+(7, '0003'),
+(7, '0004'),
+(8, '0002'),
+(8, '0003'),
+(9, '0001'),
+(9, '0004'),
+(10, '0002');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
