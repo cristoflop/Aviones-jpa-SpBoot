@@ -35,6 +35,9 @@ public class Fly {
     @ManyToMany
     private List<Crewmate> crewmates;
 
+    // JSON
+    private String data;
+
     public Fly(Company company,
                Plane plane,
                Airport source,
@@ -42,7 +45,8 @@ public class Fly {
                Date startDate,
                Time startTime,
                double duration,
-               List<Crewmate> crewmates) {
+               List<Crewmate> crewmates,
+               String data) {
         this.company = company;
         this.plane = plane;
         this.source = source;
@@ -51,6 +55,7 @@ public class Fly {
         this.startTime = startTime;
         this.duration = duration;
         this.crewmates = crewmates;
+        this.data = data;
     }
 
     public Fly() {
@@ -90,6 +95,10 @@ public class Fly {
 
     public List<Crewmate> getCrewmates() {
         return crewmates;
+    }
+
+    public String getData() {
+        return data;
     }
 
 }
