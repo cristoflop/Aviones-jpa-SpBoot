@@ -5,7 +5,6 @@ import es.urjc.cloudapps.planes.domain.*;
 import es.urjc.cloudapps.planes.dto.CrewmateTotalsDto;
 import es.urjc.cloudapps.planes.dto.PlaneRevisionDto;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Controller;
 
 import java.sql.Date;
 import java.sql.Time;
@@ -13,7 +12,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-@Controller
 public class DataLoader implements CommandLineRunner {
 
     private final AirportRepository airportRepository;
