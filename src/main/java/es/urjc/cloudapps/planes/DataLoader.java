@@ -3,8 +3,12 @@ package es.urjc.cloudapps.planes;
 import es.urjc.cloudapps.planes.data.*;
 import es.urjc.cloudapps.planes.domain.Crewmate;
 import es.urjc.cloudapps.planes.domain.Fly;
+import es.urjc.cloudapps.planes.domain.Mechanic;
 import es.urjc.cloudapps.planes.dto.CrewmateTotalsDto;
 import es.urjc.cloudapps.planes.dto.PlaneRevisionDto;
+import es.urjc.cloudapps.planes.dto.PlaneRevisionJsonDto;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Controller;
 
@@ -40,19 +44,23 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        // queries
+        // queries v1
         System.out.println("----------------------------------------");
-        this.query1();
+        this.queryV1_1();
         System.out.println("----------------------------------------");
-        this.query2();
+        this.queryV1_2();
         System.out.println("----------------------------------------");
-        this.query3();
+        this.queryV1_3();
         System.out.println("----------------------------------------");
-        this.query4();
+        this.queryV1_4();
+
+        // queries v2
+        System.out.println("----------------------------------------");
+        this.queryV2_1();
         System.out.println("----------------------------------------");
     }
 
-    private void query1() {
+    private void queryV1_1() {
         System.out.println("Para cada avión, mostrar el nombre y apellidos de los mecánicos responsables de\n" +
                 "sus revisiones.");
         List<PlaneRevisionDto> planes = this.planeRepository.findAllWithRevisionMechanics();
@@ -63,7 +71,7 @@ public class DataLoader implements CommandLineRunner {
         });
     }
 
-    private void query2() {
+    private void queryV1_2() {
         String city = "Barcelona";
         Date date = Date.valueOf("2020-06-18"); // 18 de junio de 2020 aterrizan dos vuelos en Barcelona
         System.out.println("Dado el nombre de una ciudad y una fecha, listado de los vuelos que han aterrizado\n" +
@@ -77,7 +85,7 @@ public class DataLoader implements CommandLineRunner {
         });
     }
 
-    private void query3() {
+    private void queryV1_3() {
         String crewmateId = "0001"; // Cristofer despega desde MAD y LCY
         System.out.println("Dado el código de empleado de un tripulante, mostrar su nombre y apellidos y las\n" +
                 "ciudades desde las que ha despegado junto con la fecha en que despegó.");
@@ -93,7 +101,7 @@ public class DataLoader implements CommandLineRunner {
         });
     }
 
-    private void query4() {
+    private void queryV1_4() {
         System.out.println("Para cada tripulante, mostrar su nombre y apellidos junto con su número total de\n" +
                 "vuelos y la suma de horas de estos.");
         for (CrewmateTotalsDto totals : this.crewmateRepository.findAllCrewmateTotals()) {
@@ -105,6 +113,26 @@ public class DataLoader implements CommandLineRunner {
                     .concat(", horas de vuelo: " + totals.getFlyingHours())
             );
         }
+    }
+
+    private void queryV2_1() {
+        System.out.println("Para cada avión, mostrar el nombre y apellidos de los mecánicos responsables de\n" +
+                "sus revisiones. V2");
+        List<PlaneRevisionJsonDto> planes = this.planeRepository.findAllWithRevisionJson();
+        planes.forEach(plane -> {
+            JSONObject revisionsJson = plane.getRevisionsJson();
+            if (revisionsJson != null) {
+                System.out.println("--- Avion con matricula " + plane.getPlate());
+                JSONArray revisions = revisionsJson.getJSONArray("revisions");
+                revisions.forEach(revision -> {
+                    long revisionId = ((JSONObject) revision).getLong("id");
+                    String mechanicId = ((JSONObject) revision).getString("mechanic_in_charge_id");
+                    Mechanic mechanic = this.mechanicRepository.findById(mechanicId).get();
+                    System.out.println("   --- Revision con id: " + revisionId +
+                            ", responsable: " + mechanic.getName().concat(" ").concat(mechanic.getSurname()));
+                });
+            }
+        });
     }
 
 }
