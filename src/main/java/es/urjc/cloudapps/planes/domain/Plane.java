@@ -50,4 +50,14 @@ public class Plane {
         return data;
     }
 
+    @Override
+    public String toString() {
+        return "Plane{" +
+                "plate='" + plate + '\'' +
+                ", maker='" + maker + '\'' +
+                ", model='" + model + '\'' +
+                ", flightHours=" + flightHours +
+                ", data='" + data + '\'' +
+                '}';
+    }
 }

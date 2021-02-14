@@ -29,4 +29,11 @@ public class Mechanic extends Employee {
         return training;
     }
 
+    @Override
+    public String toString() {
+        return "Mechanic{" +
+                "incorporationYear=" + incorporationYear +
+                ", training=" + training +
+                '}';
+    }
 }

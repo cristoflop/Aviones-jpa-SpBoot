@@ -22,4 +22,10 @@ public class Crewmate extends Employee {
         return position;
     }
 
+    @Override
+    public String toString() {
+        return "Crewmate{" +
+                "position=" + position +
+                '}';
+    }
 }

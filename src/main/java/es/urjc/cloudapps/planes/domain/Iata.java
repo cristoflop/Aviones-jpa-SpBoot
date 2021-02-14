@@ -39,4 +39,10 @@ public class Iata implements Serializable {
         return Objects.hash(value);
     }
 
+    @Override
+    public String toString() {
+        return "Iata{" +
+                "value='" + value + '\'' +
+                '}';
+    }
 }

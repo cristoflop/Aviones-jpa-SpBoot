@@ -44,4 +44,13 @@ public abstract class Employee {
         return company;
     }
 
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", company=" + company +
+                '}';
+    }
 }

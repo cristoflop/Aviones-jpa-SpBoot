@@ -89,4 +89,18 @@ public class Revision {
         return airport;
     }
 
+    @Override
+    public String toString() {
+        return "Revision{" +
+                "id=" + id +
+                ", plane=" + plane +
+                ", initDate=" + initDate +
+                ", endDate=" + endDate +
+                ", spentHours=" + spentHours +
+                ", mechanicInCharge=" + mechanicInCharge +
+                ", revisionType=" + revisionType +
+                ", description='" + description + '\'' +
+                ", airport=" + airport +
+                '}';
+    }
 }

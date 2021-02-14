@@ -101,4 +101,19 @@ public class Fly {
         return data;
     }
 
+    @Override
+    public String toString() {
+        return "Fly{" +
+                "id=" + id +
+                ", company=" + company +
+                ", plane=" + plane +
+                ", source=" + source +
+                ", destination=" + destination +
+                ", startDate=" + startDate +
+                ", startTime=" + startTime +
+                ", duration=" + duration +
+                ", crewmates=" + crewmates +
+                ", data='" + data + '\'' +
+                '}';
+    }
 }
