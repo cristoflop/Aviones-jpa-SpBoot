@@ -1,14 +1,10 @@
 package es.urjc.cloudapps.planes;
 
 import es.urjc.cloudapps.planes.data.*;
-import es.urjc.cloudapps.planes.domain.*;
+import es.urjc.cloudapps.planes.domain.Crewmate;
+import es.urjc.cloudapps.planes.domain.Fly;
 import es.urjc.cloudapps.planes.domain.provinces.Data;
-import es.urjc.cloudapps.planes.dto.CrewmateTotalsDto;
-import es.urjc.cloudapps.planes.dto.PlaneRevisionDto;
-import es.urjc.cloudapps.planes.dto.PlaneRevisionJsonDto;
-import es.urjc.cloudapps.planes.dto.ProvinceTotalsDto;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import es.urjc.cloudapps.planes.dto.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Controller;
@@ -72,6 +68,8 @@ public class DataLoader implements CommandLineRunner {
         // queries v2
         System.out.println("----------------------------------------");
         this.queryV2_1();
+        System.out.println("----------------------------------------");
+        this.queryV2_2();
         System.out.println("----------------------------------------");
         this.queryV2_3();
         System.out.println("----------------------------------------");
@@ -145,25 +143,23 @@ public class DataLoader implements CommandLineRunner {
                 "sus revisiones. (v2)");
         List<PlaneRevisionJsonDto> planes = this.planeRepository.findAllWithRevisionJson();
         planes.forEach(plane -> {
-            JSONObject revisionsJson = plane.getRevisionsJson();
-            if (revisionsJson != null) {
-                System.out.println("--- Avion con matricula " + plane.getPlate());
-                JSONArray revisions = revisionsJson.getJSONArray("revisions");
-                revisions.forEach(revision -> {
-                    long revisionId = ((JSONObject) revision).getLong("id");
-                    String mechanicId = ((JSONObject) revision).getString("mechanic_in_charge_id");
-                    Mechanic mechanic = this.mechanicRepository.findById(mechanicId).get();
-                    System.out.println("   --- Revision con id: " + revisionId +
-                            ", responsable: " + mechanic.getName().concat(" ").concat(mechanic.getSurname()));
-                });
-            }
+                System.out.println("--- Avion con matricula " + plane.getFlyId());
+                System.out.println("   --- Mecánicos: "+ plane.getMechanics());
         });
     }
 
     private void queryV2_2() {
         System.out.println("Para cada tripulante, mostrar su nombre y apellidos junto con su número total de\n" +
                 "vuelos y la suma de horas de estos. (v2)");
-      
+        for (CrewmateTotalsJsonDto totals : this.crewmateRepository.findAllCrewmateTotalsJson()) {
+            System.out.println("--- "
+                    .concat(totals.getName())
+                    .concat(" ")
+                    .concat(totals.getSurname())
+                    .concat(", vuelos que ha realizado: " + totals.getTotalFlies())
+                    .concat(", horas de vuelo: " + totals.getFlyingHours())
+            );
+        }
     }
 
     private void queryV2_3() {

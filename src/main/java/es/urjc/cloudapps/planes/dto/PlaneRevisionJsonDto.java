@@ -1,23 +1,8 @@
 package es.urjc.cloudapps.planes.dto;
 
-import org.json.JSONObject;
+public interface PlaneRevisionJsonDto {
 
-public class PlaneRevisionJsonDto {
+    String getFlyId();
 
-    private final String plate;
-    private final JSONObject revisionsJson;
-
-    public PlaneRevisionJsonDto(String plate, String revisionsJson) {
-        this.plate = plate;
-        this.revisionsJson = revisionsJson == null ? null : new JSONObject(revisionsJson);
-    }
-
-    public String getPlate() {
-        return plate;
-    }
-
-    public JSONObject getRevisionsJson() {
-        return revisionsJson;
-    }
-
+    String getMechanics();
 }

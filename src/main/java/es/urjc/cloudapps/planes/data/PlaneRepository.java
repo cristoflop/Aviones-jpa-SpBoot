@@ -14,8 +14,12 @@ public interface PlaneRepository extends CrudRepository<Plane, String> {
             "from Plane p join Revision r on p = r.plane")
     List<PlaneRevisionDto> findAllWithRevisionMechanics();
 
-    // @Query(value = "select new es.urjc.cloudapps.planes.dto.PlaneRevisionJsonDto(p.plate, FUNCTION('JSON_EXTRACT', p.data, '$.revisions')) from Plane p")
-    @Query(value = "select new es.urjc.cloudapps.planes.dto.PlaneRevisionJsonDto(p.plate, p.data) from Plane p")
+    @Query(value = "SELECT p.plate AS flyId, GROUP_CONCAT(DISTINCT m.name, ' ', m.surname SEPARATOR ', ') AS mechanics " +
+            "FROM planes p, JSON_TABLE(p.data, '$.revisions[*]' COLUMNS ( " +
+            "         id VARCHAR(255) PATH '$.mechanic_in_charge_id' " +
+            "         )) mechanics_ids\n" +
+            "LEFT JOIN mechanics m ON m.id = mechanics_ids.id " +
+            "GROUP BY p.plate", nativeQuery = true)
     List<PlaneRevisionJsonDto> findAllWithRevisionJson();
 
 }
