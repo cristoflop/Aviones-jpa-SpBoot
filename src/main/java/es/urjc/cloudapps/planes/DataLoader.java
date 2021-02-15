@@ -73,8 +73,6 @@ public class DataLoader implements CommandLineRunner {
         System.out.println("----------------------------------------");
         this.queryV2_3();
         System.out.println("----------------------------------------");
-        this.queryV2_3();
-        System.out.println("----------------------------------------");
         this.queryV2_4();
         System.out.println("----------------------------------------");
     }
