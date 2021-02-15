@@ -1,15 +1,16 @@
 package es.urjc.cloudapps.planes;
 
 import es.urjc.cloudapps.planes.data.*;
-import es.urjc.cloudapps.planes.domain.Crewmate;
-import es.urjc.cloudapps.planes.domain.Fly;
-import es.urjc.cloudapps.planes.domain.Mechanic;
+import es.urjc.cloudapps.planes.domain.*;
+import es.urjc.cloudapps.planes.domain.provinces.Data;
 import es.urjc.cloudapps.planes.dto.CrewmateTotalsDto;
 import es.urjc.cloudapps.planes.dto.PlaneRevisionDto;
 import es.urjc.cloudapps.planes.dto.PlaneRevisionJsonDto;
+import es.urjc.cloudapps.planes.dto.ProvinceTotalsDto;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Controller;
 
 import java.sql.Date;
@@ -25,6 +26,7 @@ public class DataLoader implements CommandLineRunner {
     private final PlaneRepository planeRepository;
     private final FlyRepository flyRepository;
     private final RevisionRepository revisionRepository;
+    private final ProvinceRepository provinceRepository;
 
     public DataLoader(AirportRepository airportRepository,
                       CompanyRepository companyRepository,
@@ -32,7 +34,8 @@ public class DataLoader implements CommandLineRunner {
                       MechanicRepository mechanicRepository,
                       PlaneRepository planeRepository,
                       FlyRepository flyRepository,
-                      RevisionRepository revisionRepository) {
+                      RevisionRepository revisionRepository,
+                      ProvinceRepository provinceRepository) {
         this.airportRepository = airportRepository;
         this.companyRepository = companyRepository;
         this.crewmateRepository = crewmateRepository;
@@ -40,10 +43,22 @@ public class DataLoader implements CommandLineRunner {
         this.planeRepository = planeRepository;
         this.flyRepository = flyRepository;
         this.revisionRepository = revisionRepository;
+        this.provinceRepository = provinceRepository;
     }
 
     @Override
     public void run(String... args) {
+        //show sample data
+        System.out.println("--------------DATOS EN BBDD-------------");
+        printAll(airportRepository);
+        printAll(companyRepository);
+        printAll(crewmateRepository);
+        printAll(mechanicRepository);
+        printAll(planeRepository);
+        printAll(flyRepository);
+        printAll(revisionRepository);
+
+        System.out.println("----------------------------------------");
         // queries v1
         System.out.println("----------------------------------------");
         this.queryV1_1();
@@ -58,6 +73,16 @@ public class DataLoader implements CommandLineRunner {
         System.out.println("----------------------------------------");
         this.queryV2_1();
         System.out.println("----------------------------------------");
+        this.queryV2_3();
+        System.out.println("----------------------------------------");
+        this.queryV2_3();
+        System.out.println("----------------------------------------");
+        this.queryV2_4();
+        System.out.println("----------------------------------------");
+    }
+
+    private void printAll(CrudRepository<?, ?> repository) {
+        repository.findAll().forEach(System.out::println);
     }
 
     private void queryV1_1() {
@@ -117,7 +142,7 @@ public class DataLoader implements CommandLineRunner {
 
     private void queryV2_1() {
         System.out.println("Para cada avión, mostrar el nombre y apellidos de los mecánicos responsables de\n" +
-                "sus revisiones. V2");
+                "sus revisiones. (v2)");
         List<PlaneRevisionJsonDto> planes = this.planeRepository.findAllWithRevisionJson();
         planes.forEach(plane -> {
             JSONObject revisionsJson = plane.getRevisionsJson();
@@ -133,6 +158,41 @@ public class DataLoader implements CommandLineRunner {
                 });
             }
         });
+    }
+
+    private void queryV2_2() {
+        System.out.println("Para cada tripulante, mostrar su nombre y apellidos junto con su número total de\n" +
+                "vuelos y la suma de horas de estos. (v2)");
+      
+    }
+
+    private void queryV2_3() {
+        System.out.println("Listado de los datos de todas las provincias. (v2)");
+        for (Data provinceData : this.provinceRepository.findAllProvincesData()) {
+            System.out.println(
+                    "--- "
+                    .concat("(")
+                    .concat(provinceData.getYear().toString())
+                    .concat(") ")
+                    .concat("Valor:")
+                    .concat(" ")
+                    .concat(provinceData.getValue().toString())
+            );
+        }
+    }
+
+    private void queryV2_4() {
+        System.out.println("Listado mostrando, para cada comunidad autónoma, su número de provincias (v2)");
+        for (ProvinceTotalsDto totals : this.provinceRepository.findAllProvincesTotals()) {
+            System.out.println(
+                    "--- "
+                    .concat(totals.getId())
+                    .concat(", ")
+                    .concat("Provincias:")
+                    .concat(" ")
+                    .concat(totals.getProvinces().toString())
+            );
+        }
     }
 
 }

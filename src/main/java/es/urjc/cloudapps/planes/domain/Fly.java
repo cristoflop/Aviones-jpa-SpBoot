@@ -112,7 +112,6 @@ public class Fly {
                 ", startDate=" + startDate +
                 ", startTime=" + startTime +
                 ", duration=" + duration +
-                ", crewmates=" + crewmates +
                 ", data='" + data + '\'' +
                 '}';
     }
