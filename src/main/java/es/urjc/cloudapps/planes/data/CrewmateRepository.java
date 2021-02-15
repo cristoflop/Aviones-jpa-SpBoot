@@ -19,10 +19,18 @@ public interface CrewmateRepository extends CrudRepository<Crewmate, String> {
 
     @Query(value = "SELECT cr.id, cr.name, cr.surname, COUNT(*) AS totalFlies, COALESCE(SUM(f.duration),0) AS flyingHours " +
             "FROM flies f, JSON_TABLE(f.data, '$.crewmate_ids[*]' COLUMNS ( " +
-            "         id VARCHAR(255) PATH '$' " +
-            "         )) crewmates_ids " +
-            "RIGHT JOIN crewmates cr ON cr.id = crewmates_ids.id " +
-            "GROUP BY cr.id", nativeQuery = true)
+            "    id VARCHAR(255) PATH '$' " +
+            "    )) crewmates_ids " +
+            "                  JOIN crewmates cr ON cr.id = crewmates_ids.id " +
+            "GROUP BY cr.id " +
+            "UNION " +
+            "SELECT cr.id, cr.name, cr.surname, 0 AS totalFlies, 0 AS flyingHours " +
+            "FROM crewmates cr WHERE cr.id NOT IN ( " +
+            "    " +
+            "SELECT crewmates_ids.id FROM flies f, JSON_TABLE(f.data, '$.crewmate_ids[*]' COLUMNS ( " +
+            "        id VARCHAR(255) PATH '$' " +
+            "        )) crewmates_ids " +
+            ")", nativeQuery = true)
     List<CrewmateTotalsJsonDto> findAllCrewmateTotalsJson();
 
 }
